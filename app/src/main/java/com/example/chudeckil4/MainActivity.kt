@@ -1,6 +1,8 @@
 package com.example.chudeckil4
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -17,6 +19,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var etB2: EditText
     private lateinit var btnAdd: Button
     private lateinit var btnMultiply: Button
+    private lateinit var spinnerOperation: AlwaysSelectSpinner
+
+    private var currentToast: Toast? = null
+    private var isFirstSpinnerCall = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +34,46 @@ class MainActivity : AppCompatActivity() {
         etB2 = findViewById(R.id.etB2)
         btnAdd = findViewById(R.id.btnAdd)
         btnMultiply = findViewById(R.id.btnMultiply)
+        spinnerOperation = findViewById(R.id.spinnerOperation)
 
         btnAdd.setOnClickListener {
-            calculateAndShowResult(Operation.ADDITION)
+            performCalculation(Operation.ADDITION)
         }
 
         btnMultiply.setOnClickListener {
-            calculateAndShowResult(Operation.MULTIPLICATION)
+            performCalculation(Operation.MULTIPLICATION)
         }
+
+        spinnerOperation.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (isFirstSpinnerCall) {
+                    isFirstSpinnerCall = false
+                    return
+                }
+                val operation = if (position == 1) Operation.MULTIPLICATION else Operation.ADDITION
+                performCalculation(operation)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    private fun isAnyFieldEntered(): Boolean {
+        return etA1.text.toString().trim().isNotEmpty() ||
+               etA2.text.toString().trim().isNotEmpty() ||
+               etB1.text.toString().trim().isNotEmpty() ||
+               etB2.text.toString().trim().isNotEmpty()
+    }
+
+    private fun performCalculation(operation: Operation) {
+        if (!isAnyFieldEntered()) {
+            currentToast?.cancel()
+            currentToast = Toast.makeText(applicationContext, "Wprowadź liczby przed wykonaniem operacji!", Toast.LENGTH_SHORT)
+            currentToast?.show()
+            return
+        }
+
+        calculateAndShowResult(operation)
     }
 
     private enum class Operation {
@@ -45,7 +83,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun parsePart(text: String): Double? {
         val trimmed = text.trim().replace(',', '.')
-        if (trimmed.isEmpty()) return 0.0
+        if (trimmed.isEmpty() || trimmed == "-" || trimmed == "+" || trimmed == "." || trimmed == "-.") return 0.0
         return trimmed.toDoubleOrNull()
     }
 
@@ -56,7 +94,9 @@ class MainActivity : AppCompatActivity() {
         val bIm = parsePart(etB2.text.toString())
 
         if (aRe == null || aIm == null || bRe == null || bIm == null) {
-            Toast.makeText(applicationContext, "Wprowadź poprawne liczby!", Toast.LENGTH_SHORT).show()
+            currentToast?.cancel()
+            currentToast = Toast.makeText(applicationContext, "Wprowadź poprawne liczby!", Toast.LENGTH_SHORT)
+            currentToast?.show()
             return
         }
 
@@ -74,7 +114,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         val resultMessage = "Wynik: ${formatComplex(resRe, resIm)}"
-        Toast.makeText(applicationContext, resultMessage, Toast.LENGTH_LONG).show()
+        currentToast?.cancel()
+        currentToast = Toast.makeText(applicationContext, resultMessage, Toast.LENGTH_SHORT)
+        currentToast?.show()
     }
 
     private fun formatNumber(value: Double): String {

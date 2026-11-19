@@ -7,6 +7,11 @@
     <string name="label_b">B:</string>
     <string name="hint_real">Re</string>
     <string name="hint_imaginary">Im</string>
-    <string name="btn_addition">Dodawanie</string>
-    <string name="btn_multiplication">Mnożenie</string>
+    <string name="btn_addition">+</string>
+    <string name="btn_multiplication">*</string>
+
+    <string-array name="operations_array">
+        <item>+</item>
+        <item>*</item>
+    </string-array>
 </resources>
