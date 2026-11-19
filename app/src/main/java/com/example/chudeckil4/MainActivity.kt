@@ -2,6 +2,7 @@ package com.example.chudeckil4
 
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnAdd: Button
     private lateinit var btnMultiply: Button
     private lateinit var spinnerOperation: AlwaysSelectSpinner
+    private lateinit var gaussGraphView: GaussGraphView
 
     private var currentToast: Toast? = null
     private var isFirstSpinnerCall = true
@@ -35,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         btnAdd = findViewById(R.id.btnAdd)
         btnMultiply = findViewById(R.id.btnMultiply)
         spinnerOperation = findViewById(R.id.spinnerOperation)
+        gaussGraphView = findViewById(R.id.gaussGraphView)
 
         btnAdd.setOnClickListener {
             performCalculation(Operation.ADDITION)
@@ -117,6 +120,17 @@ class MainActivity : AppCompatActivity() {
         currentToast?.cancel()
         currentToast = Toast.makeText(applicationContext, resultMessage, Toast.LENGTH_SHORT)
         currentToast?.show()
+
+        gaussGraphView.setResult(resRe, resIm)
+        hideKeyboard()
+    }
+
+    private fun hideKeyboard() {
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocusView = currentFocus
+        if (currentFocusView != null) {
+            imm.hideSoftInputFromWindow(currentFocusView.windowToken, 0)
+        }
     }
 
     private fun formatNumber(value: Double): String {

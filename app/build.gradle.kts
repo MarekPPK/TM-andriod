@@ -33,6 +33,9 @@ android {
 }
 
 dependencies {
+    implementation("com.jjoe64:graphview:4.2.2") {
+        exclude(group = "com.android.support")
+    }
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
