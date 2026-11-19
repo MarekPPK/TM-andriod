@@ -1,31 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ivory"
+    android:fillViewport="true"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/p"
-        android:layout_width="166dp"
-        android:layout_height="107dp"
-        android:layout_marginStart="212dp"
-        android:layout_marginTop="64dp"
-        android:text="witaj"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
 
-    <EditText
-        android:id="@+id/e"
-        android:layout_width="454dp"
-        android:layout_height="344dp"
-        android:layout_marginStart="168dp"
-        android:layout_marginTop="162dp"
-        android:ems="10"
-        android:hint="podaj swoje imie"
-        android:inputType="text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/p" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_calculator"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#1C1B1F"
+            android:gravity="center"
+            android:layout_marginBottom="28dp" />
+
+        <!-- Liczba A -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_a"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1C1B1F"
+                android:layout_marginEnd="12dp" />
+
+            <EditText
+                android:id="@+id/etA1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/hint_real"
+                android:inputType="numberSigned|numberDecimal"
+                android:gravity="center"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/etA2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/hint_imaginary"
+                android:inputType="numberSigned|numberDecimal"
+                android:gravity="center"
+                android:minHeight="48dp" />
+        </LinearLayout>
+
+        <!-- Liczba B -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_b"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1C1B1F"
+                android:layout_marginEnd="12dp" />
+
+            <EditText
+                android:id="@+id/etB1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:hint="@string/hint_real"
+                android:inputType="numberSigned|numberDecimal"
+                android:gravity="center"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/etB2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/hint_imaginary"
+                android:inputType="numberSigned|numberDecimal"
+                android:gravity="center"
+                android:minHeight="48dp" />
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:text="@string/btn_addition"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/lot_morskiej_nocy" />
+
+            <Button
+                android:id="@+id/btnMultiply"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="@string/btn_multiplication"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/lot_morskiej_nocy" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
